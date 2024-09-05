@@ -667,6 +667,12 @@ write).  If you choose, you can include this .py file pre-packaged in
 your own distributions: it is identical for any Python version (2 or
 3).
 
+*New in version 1.17.1:* ``filename`` can instead be a file-like object
+(such as a StringIO instance). The generated code will be written to this
+file-like object. However, if an error arises during generation, partial
+code may be written; it is the caller's responsibility to clean up
+if this occurs.
+
 **ffibuilder.emit_c_code(filename):** generate the given .c file (for API
 mode) without compiling it.  Can be used if you have some other method
 to compile it, e.g. if you want to integrate with some larger build
@@ -675,6 +681,12 @@ the .c file: unless the build script you used depends on the OS or
 platform, the .c file itself is generic (it would be exactly the same
 if produced on a different OS, with a different version of CPython, or
 with PyPy; it is done with generating the appropriate ``#ifdef``).
+
+*New in version 1.17.1:* ``filename`` can instead be a file-like object
+(such as a StringIO instance). The generated code will be written to this
+file-like object. However, if an error arises during generation, partial
+code may be written; it is the caller's responsibility to clean up
+if this occurs.
 
 **ffibuilder.distutils_extension(tmpdir='build', verbose=True):** for
 distutils-based ``setup.py`` files.  Calling this creates the .c file
@@ -882,7 +894,7 @@ Extra arguments to ``ffi.verify()``:
      ext = ffi.verify(..., sources=['/path/to/this/file/foo.c'])
 
    except that the default name of the produced library is built from
-   the CRC checkum of the argument ``sources``, as well as most other
+   the CRC checksum of the argument ``sources``, as well as most other
    arguments you give to ``ffi.verify()`` -- but not ``relative_to``.
    So if you used the second line, it would stop finding the
    already-compiled library after your project is installed, because
